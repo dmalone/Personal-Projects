@@ -19,6 +19,7 @@ class Player (pygame.sprite.Sprite):
         
         
 pygame.init()
+clock = pygame.time.Clock()
 
 
 screen = pygame.display.set_mode((640,480))
@@ -41,13 +42,33 @@ while n == 1:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 n = 0
-            elif event.key == pygame.K_RIGHT:
-                if pygame.key.get_pressed()[pygame.K_RIGHT]:
-                    print "hello"
-                pygame.key.set_repeat(10,10)
-                character.update([10,0])
-                screen.blit(blank, (character.old.x, character.old.y))
-                screen.blit(character.image,(character.rect.x,character.rect.y))
+            #elif event.key == pygame.K_RIGHT:
+    key = pygame.key.get_pressed()[pygame.K_RIGHT]
+    if key:
+        pygame.key.set_repeat(10,10)
+        character.update([1,0])
+        screen.blit(blank, (character.old.x, character.old.y))
+        screen.blit(character.image,(character.rect.x,character.rect.y))
+    key = pygame.key.get_pressed()[pygame.K_LEFT]
+    if key:
+        pygame.key.set_repeat(10,10)
+        character.update([-1,0])
+        screen.blit(blank, (character.old.x, character.old.y))
+        screen.blit(character.image,(character.rect.x,character.rect.y))
+    key = pygame.key.get_pressed()[pygame.K_UP]
+    if key:
+        pygame.key.set_repeat(10,10)
+        character.update([0,-1])
+        screen.blit(blank, (character.old.x, character.old.y))
+        screen.blit(character.image,(character.rect.x,character.rect.y))
+    key = pygame.key.get_pressed()[pygame.K_DOWN]
+    if key:
+        pygame.key.set_repeat(10,10)
+        character.update([0,1])
+        screen.blit(blank, (character.old.x, character.old.y))
+        screen.blit(character.image,(character.rect.x,character.rect.y))
+ 
     pygame.display.flip()
+    clock.tick(100)
 
 pygame.quit()
