@@ -72,8 +72,10 @@ public class Translator {
 				System.out.printf("\u00D7");
 			} else if (x.equals("Z")) {
 				System.out.printf("2");
+			} else if (x.equals("%")) {
+				System.out.printf("%%"); //extra case for a regular percentage sign
 			} else {
-				System.out.printf(x);
+				System.out.printf(x.toString());
 			}
 
 		}
