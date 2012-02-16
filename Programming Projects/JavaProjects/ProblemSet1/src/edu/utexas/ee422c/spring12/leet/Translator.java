@@ -11,22 +11,21 @@ public class Translator {
 		Scanner sc = new Scanner(System.in);
 		
 		//Prompt user for a string and call translate method to translate
-		System.out.printf("Hello there, please type in a word to be translated (Type 'STOP' to terminate the program): ");
+		//System.out.printf("Hello there, please type in a word to be translated (Type 'STOP' to terminate the program): ");
 		String word = sc.nextLine();
 		
 		//Repeat prompt until the string 'STOP' is detected
 		while (!word.equals("STOP")) {
 			translate(word);
-			System.out
-					.printf("Please type in the next word to be translated: ");
+			//System.out.printf("Please type in the next word to be translated: ");
 			word = sc.nextLine();
 		}
-		System.out.println("Terminating program..");
+		//System.out.println("Terminating program..");
 	}
 
 	//translate method that compares a given character to a list of Leet equivalents
 	public static String translate(String str) {
-		System.out.printf("Translated word: ");
+		//System.out.printf("Translated word: ");
 		
 		//Compare every character in the entire string for a possible Leet match
 		for (int n = 0; n < str.length(); n++) {
@@ -75,12 +74,12 @@ public class Translator {
 			} else if (x.equals("%")) {
 				System.out.printf("%%"); //extra case for a regular percentage sign
 			} else {
-				System.out.printf(x.toString());
+				System.out.printf(x);
 			}
 
 		}
-		//Add some spacing to make things look more orgaized
-		System.out.printf("\n\n");
+		//Add some spacing to make things look more organized
+		//System.out.printf("\n\n");
 		return str;
 	}
 }
