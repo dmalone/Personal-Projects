@@ -142,7 +142,7 @@ public class MyString {
 			offset++;
 		}
 		return;
-		// System.out.print(contents);
+		
 
 	}
 
