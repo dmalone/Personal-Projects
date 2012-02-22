@@ -26,38 +26,36 @@ public class MyString {
 		// contents[i] = s.charAt(i);
 		// }
 		contents = s.toCharArray();
-		// System.out.print(contents);
 
 	}
 
 	public MyString(int x) {
 		// postcondition: initializes ‘‘this’’ to represent ‘‘x’’
 
-		String tempString = String.valueOf(x);
+		String tempString = Integer.toString(x);
 		// System.out.println(tempString.length());
 		size = tempString.length();
 		contents = new char[size];
 		contents = tempString.toCharArray();
-		// System.out.print(contents);
+
 	}
 
 	public int intValue() {
 		// returns the integer represented by ‘‘this’’
 		// throws number format exception error if value is now an int
+		int n;
 
-		int n = 0;
 		try {
 			// System.out.print(contents);
 			// int n = 0;
 			// System.out.println(Integer.parseInt(new String(contents)));
-			n = Integer.parseInt(new String(contents));
-
+			// n = Integer.parseInt(new String(contents));
+			n = Integer.valueOf(new String(contents));
 		} catch (NumberFormatException o) {
 			System.out.println(o.getClass());
+			n = 0;
 		}
 		return n;
-
-		// System.out.prin1t(contents);
 
 	}
 
@@ -91,8 +89,6 @@ public class MyString {
 			index++;
 		}
 
-		//System.out.print(contents);
-
 	}
 
 	public void append(int x) {
@@ -100,7 +96,7 @@ public class MyString {
 		// representation of x
 
 		// convert the value of x into a string
-		String tempString = String.valueOf(x);
+		String tempString = Integer.toString(x);
 
 		// use the append method for strings since appending a string of an int
 		// would do the same thing
@@ -112,24 +108,31 @@ public class MyString {
 		// of "x" starting at index "offset", making space for "x" by
 		// moving the original characters up; if "offset" is invalid, throws
 		// StringIndexOutOfBoundsException
+		// String.length(), String.charAt(), and Integer.toString()
 		int index = 0;
 		char[] oldContents = contents;
-		String stringEquiv = String.valueOf(x);
-		size += stringEquiv.length();
-		// System.out.println(size);
+		String test = new String(contents);
+
 		try {
-			String test = contents.toString();
+
 			test.charAt(offset);
+
 		} catch (StringIndexOutOfBoundsException o) {
+
 			System.out.println(o.getClass());
 			return;
+
 		}
+
+		String stringEquiv = Integer.toString(x);
+		size += stringEquiv.length();
 		contents = new char[size];
-		for (int i = 0; i < offset; i++) {
+
+		for (int i = 0; i <= offset; i++) {
 			contents[i] = oldContents[i];
 		}
 
-		for (int n = offset; n < (offset + stringEquiv.length()); n++) {
+		for (int n = offset + 1; n < (offset + stringEquiv.length()); n++) {
 			contents[n] = stringEquiv.charAt(index);
 			index++;
 		}
@@ -139,7 +142,7 @@ public class MyString {
 			offset++;
 		}
 		return;
-		//System.out.print(contents);
+		// System.out.print(contents);
 
 	}
 
