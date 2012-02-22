@@ -34,6 +34,7 @@ public class MyString {
 		// postcondition: initializes ‘‘this’’ to represent ‘‘x’’
 
 		String tempString = String.valueOf(x);
+		// System.out.println(tempString.length());
 		size = tempString.length();
 		contents = new char[size];
 		contents = tempString.toCharArray();
@@ -44,11 +45,20 @@ public class MyString {
 		// returns the integer represented by ‘‘this’’
 		// throws number format exception error if value is now an int
 
-		System.out.print(contents);
-		// int n = 0;
-		int n = Integer.parseInt(new String(contents));
-		// System.out.prin1t(contents);
+		int n = 0;
+		try {
+			// System.out.print(contents);
+			// int n = 0;
+			// System.out.println(Integer.parseInt(new String(contents)));
+			n = Integer.parseInt(new String(contents));
+
+		} catch (NumberFormatException o) {
+			System.out.println(o.getClass());
+		}
 		return n;
+
+		// System.out.prin1t(contents);
+
 	}
 
 	public void append(String s) {
@@ -81,7 +91,7 @@ public class MyString {
 			index++;
 		}
 
-		System.out.print(contents);
+		//System.out.print(contents);
 
 	}
 
@@ -102,6 +112,34 @@ public class MyString {
 		// of "x" starting at index "offset", making space for "x" by
 		// moving the original characters up; if "offset" is invalid, throws
 		// StringIndexOutOfBoundsException
+		int index = 0;
+		char[] oldContents = contents;
+		String stringEquiv = String.valueOf(x);
+		size += stringEquiv.length();
+		// System.out.println(size);
+		try {
+			String test = contents.toString();
+			test.charAt(offset);
+		} catch (StringIndexOutOfBoundsException o) {
+			System.out.println(o.getClass());
+			return;
+		}
+		contents = new char[size];
+		for (int i = 0; i < offset; i++) {
+			contents[i] = oldContents[i];
+		}
+
+		for (int n = offset; n < (offset + stringEquiv.length()); n++) {
+			contents[n] = stringEquiv.charAt(index);
+			index++;
+		}
+
+		for (int x1 = offset + stringEquiv.length(); x1 <= size - 1; x1++) {
+			contents[x1] = oldContents[offset];
+			offset++;
+		}
+		return;
+		//System.out.print(contents);
 
 	}
 
