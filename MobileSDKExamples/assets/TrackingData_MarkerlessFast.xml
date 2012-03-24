@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<TrackingData>
+	<Sensors>
+		<Sensor type="FeatureBasedSensorSource" subtype="fast">
+			<SensorID>FeatureTracking1</SensorID>
+
+			<Parameters>
+				<FeatureBasedParameters>
+				</FeatureBasedParameters>
+			</Parameters>
+
+			<SensorCOS>
+				<SensorCosID>Patch1</SensorCosID>
+				<Parameters>
+					<referenceImage widthMM="100" heightMM="100">metaioman_target.png</referenceImage>
+				</Parameters>
+			</SensorCOS>
+
+		</Sensor>
+	</Sensors>
+	<Connections>
+		<COS>
+			<COSName>MarkerlessCOS</COSName>
+			<Fuser type="SmoothingFuser">
+				<Parameters>
+					<!-- Alpha is in the range [0...1] and determines how strong a new pose is.
+				  alpha = 0.9: less smoothing
+				  alpha = 0.1: alot smoothing-->
+					<AlphaRotation>0.5</AlphaRotation> 
+					<AlphaTranslation>0.8</AlphaTranslation>
+					<!-- if we lose tracking, keep the old pose for several frames -->
+					<KeepPoseForNumberOfFrames>0</KeepPoseForNumberOfFrames>
+				</Parameters>
+			</Fuser>
+			<SensorSource trigger="1">
+				<SensorID>FeatureTracking1</SensorID>
+				<SensorCosID>Patch1</SensorCosID>
+				<HandEyeCalibration>
+					<TranslationOffset>
+						<x>0</x>
+						<y>0</y>
+						<z>0</z>
+					</TranslationOffset>
+					<RotationOffset>
+						<x>0</x>
+						<y>0</y>
+						<z>0</z>
+						<w>1</w>
+					</RotationOffset>
+				</HandEyeCalibration>
+				<COSOffset>
+					<TranslationOffset>
+						<x>0</x>
+						<y>0</y>
+						<z>0</z>
+					</TranslationOffset>
+					<RotationOffset>
+						<x>0</x>
+						<y>0</y>
+						<z>0</z>
+						<w>1</w>
+					</RotationOffset>
+				</COSOffset>
+			</SensorSource>
+		</COS>
+	</Connections>
+</TrackingData>

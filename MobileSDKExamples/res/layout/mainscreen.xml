@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	android:layout_width="fill_parent"
+  	android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="MetaioMan"
+            android:onClick="onMetaioManBttnClicked" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Truck" 
+            android:onClick="onTruckBttnClicked" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Movie Plane"
+            android:onClick="onMoviePlaneBttnClicked" />
+
+    </LinearLayout>
+   
+</FrameLayout>

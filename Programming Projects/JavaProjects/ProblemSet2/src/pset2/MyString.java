@@ -113,30 +113,35 @@ public class MyString {
 		char[] oldContents = contents;
 		String test = new String(contents);
 
+		//attempt to test if the index is out of bounds
 		try {
 
 			test.charAt(offset);
 
 		} catch (StringIndexOutOfBoundsException o) {
-
-			System.out.println(o.getClass());
-			return;
+			throw new StringIndexOutOfBoundsException();
+			//System.out.println(o.getClass());
+			//return;
 
 		}
 
+		//initialize variables
 		String stringEquiv = Integer.toString(x);
 		size += stringEquiv.length();
 		contents = new char[size];
-
-		for (int i = 0; i <= offset; i++) {
+		
+		//add in all the original characters before the insertion point
+		for (int i = 0; i < offset; i++) {
 			contents[i] = oldContents[i];
 		}
 
-		for (int n = offset + 1; n < (offset + stringEquiv.length()); n++) {
+		//add the string to be inserted
+		for (int n = offset; n < (offset + stringEquiv.length()); n++) {
 			contents[n] = stringEquiv.charAt(index);
 			index++;
 		}
 
+		//add the remaining characters from the original string
 		for (int x1 = offset + stringEquiv.length(); x1 <= size - 1; x1++) {
 			contents[x1] = oldContents[offset];
 			offset++;
