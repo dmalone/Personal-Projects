@@ -9,9 +9,13 @@
 
 package com.metaio.MobileSDKExample.simple;
 
+import java.util.Random;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.metaio.MobileSDKExample.R;
 import com.metaio.tools.io.AssetsManager;
@@ -34,6 +38,8 @@ import com.metaio.unifeye.ndk.Vector3d;
  * 
  */
 public class AdvancedContentActivity extends ARViewActivity {
+	
+	public int var = 0;
 
 	/**
 	 * Callback handler for onAnimationFinished events from the MobileSDK.
@@ -64,7 +70,7 @@ public class AdvancedContentActivity extends ARViewActivity {
 	/**
 	 * References the MetaioMan geometry
 	 */
-	private IUnifeyeMobileGeometry mMetaioMan;
+	public IUnifeyeMobileGeometry mMetaioMan;
 
 	/**
 	 * References the currently visible geometry.
@@ -82,6 +88,7 @@ public class AdvancedContentActivity extends ARViewActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mMobileSDKCallbackHandler = new MobileSDKCallbackHandler();
+		
 	}
 
 	public final static float PI_2 = (float) (Math.PI / 2.0);
@@ -207,7 +214,37 @@ public class AdvancedContentActivity extends ARViewActivity {
 		 */
 		if ( !mIsAnimationRunning && geometry.equals(mMetaioMan)) {
 			UnifeyeDebug.log("UnifeyeCallbackHandler.onGeometryTouched: " + geometry);
+			//mMetaioMan.setMoveTranslation(new Vector3d(0,-100,0));
 			
+//			Serialized s1 = new Serialized(mMetaioMan);
+			//IUnifeyeMobileGeometry blah = mMetaioMan;
+			//MyParcelable p = new MyParcelable(blah);
+			//Bundle bundle = new Bundle();
+			//bundle.putSerializable("lastState", s1)
+			
+			Intent myIntent = new Intent(AdvancedContentActivity.this,ARService.class);
+			//bundle.putParcelable("geoMan", p);
+			//if(bundle.containsKey("geoMan")){
+			//myIntent.putExtras(bundle);}
+			
+			mMetaioMan.setMoveTranslation(new Vector3d(var, 0,0));
+			var+=10;
+			
+			//Toast.makeText(this, "TROLOLOL", Toast.LENGTH_LONG).show();
+
+			//startService(myIntent);
+			//Log.d("damn","fuck");
+			//Toast.makeText(this, "TROLOLOLOLOLOLOLOLOL", Toast.LENGTH_LONG).show();
+
+			//Random random = new Random();
+			//int k = 5;
+			//for(int i=0; i<20; i++){
+			//	try { Thread.sleep(100); } catch(InterruptedException e) { e.printStackTrace(); }
+//				mMetaioMan.setMoveTranslation(new Vector3d(0,0,-k));
+				
+				//k+=5;
+			//}
+
 			if ( Math.random()< .5 )
 			{
 				mMetaioMan.startAnimation("close_down", false);
@@ -216,14 +253,14 @@ public class AdvancedContentActivity extends ARViewActivity {
 			{
 				mMetaioMan.startAnimation("shock_down", false);
 			}
-			mIsAnimationRunning = true;
+			//mIsAnimationRunning = true;
 		}
-		else if ( geometry.equals(mMoviePlayButtonPlane))
+		/*else if ( geometry.equals(mMoviePlayButtonPlane))
 		{
 			mMoviePlane.playMovieTexture();
 			mMoviePlane.setVisible(true);
 			mMoviePlayButtonPlane.setVisible(false);
-		}
+		}*/
 	}
 
 	

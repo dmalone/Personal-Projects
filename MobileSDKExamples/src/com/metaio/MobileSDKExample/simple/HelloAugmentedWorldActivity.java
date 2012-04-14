@@ -9,6 +9,7 @@
 
 package com.metaio.MobileSDKExample.simple;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.metaio.unifeye.UnifeyeDebug;
@@ -64,24 +65,33 @@ public class HelloAugmentedWorldActivity extends ARViewActivity  {
 	@Override
 	protected void loadUnifeyeContents() {
 		try {
+			//Intent myIntent = new Intent(HelloAugmentedWorldActivity.this,Receiver.class);
 
 			// Load Tracking data
 			loadTrackingData( mTrackingDataFileName ); 
 
 			// Load all geometry
 			mGeometry  = loadGeometry("metaioman.md2");
-			mGeometry2 = loadGeometry("metaioman.md2");
+			//mGeometry2 = loadGeometry("metaioman.md2");
 			//mGeometry3 = loadGeometry("metaioman.md2");
 
 			//mButton = loadGeometry("plane.obj");
 			
 			// Do something with it, like scaling
-			mGeometry.setMoveTranslation(new Vector3d(0,100,0));
 			mGeometry.setMoveScale( new Vector3d(.5f,.5f,.5f) );
 			mGeometry.setMoveRotation(new Vector3d(200, 0, 0));
 			
-			mGeometry2.setMoveScale( new Vector3d(1,1,1) );
-			mGeometry2.setMoveRotation(new Vector3d(200,0,0));
+			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+			
+			//mGeometry.
+			
+			
+			//mGeometry2.setMoveScale( new Vector3d(1,1,1) );
+			//mGeometry2.setMoveRotation(new Vector3d(200,0,0));
 			//mButton.setMoveScale(new Vector3d(50,50,50));
 			
 			//mGeometry3.setMoveTranslation(new Vector3d(100,0,0));
