@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
+import java.util.List;
 
 public class MinLengthLadderUsingAGraph {
 	public static void main(String[] a) throws IOException {
@@ -20,6 +21,12 @@ public class MinLengthLadderUsingAGraph {
 		String end = stdin.readLine();
 		System.out.println("enter min-length");
 		int length = Integer.parseInt(stdin.readLine());
+		List<String> stringList = dictionary.minLengthPath(start, end, length);
+		if (stringList.isEmpty()) {
+			System.out.println("No such word ladder!");
+			return;
+		}
+		System.out.print(stringList);
 		// generate a ladder from start to end if the min-length ladder is of
 		// the
 		// given length; otherwise, notify the user that no such ladder exists
