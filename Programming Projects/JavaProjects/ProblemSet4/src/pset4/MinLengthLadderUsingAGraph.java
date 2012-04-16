@@ -20,13 +20,51 @@ public class MinLengthLadderUsingAGraph {
 		System.out.println("enter ending word:");
 		String end = stdin.readLine();
 		System.out.println("enter min-length");
-		int length = Integer.parseInt(stdin.readLine());
-		List<String> stringList = dictionary.minLengthPath(start, end, length);
-		if (stringList.isEmpty()) {
-			System.out.println("No such word ladder!");
+		String mLength = stdin.readLine();
+
+		try {
+			Integer.parseInt(mLength);
+		} catch (NumberFormatException e) {
+			System.out.println("The number is invalid!");
 			return;
 		}
-		System.out.print(stringList);
+
+		int length = Integer.parseInt(mLength);
+		
+//		if (length == 0) {
+//			System.out.println("No ladder exists with the given length!");
+//		}
+
+		if ((start.length() != 5) || (end.length() != 5)) {
+			System.out.println("Invalid word length!");
+			return;
+		}
+
+		if (!dictionary.nodes().contains(start)
+				&& !dictionary.nodes().contains(end)) {
+			System.out.println(start + " and " + end + ":"
+					+ " Not legitimate 5-letter word(s) from the dictionary!");
+			return;
+		}
+
+		if (!dictionary.nodes().contains(start)) {
+			System.out.println(start + ":"
+					+ " Not legitimate 5-letter word(s) from the dictionary!");
+			return;
+		}
+		if (!dictionary.nodes().contains(end)) {
+			System.out.println(end + ":"
+					+ " Not legitimate 5-letter word(s) from the dictionary!");
+			return;
+		}
+
+		List<String> stringList = dictionary.minLengthPath(start, end, length);
+
+		if (!stringList.isEmpty()) {
+			System.out.println(stringList);
+		} else {
+			System.out.println("No ladder exists with the given length!");
+		}
 		// generate a ladder from start to end if the min-length ladder is of
 		// the
 		// given length; otherwise, notify the user that no such ladder exists
@@ -51,23 +89,22 @@ public class MinLengthLadderUsingAGraph {
 			}
 
 		}
-		//System.out.println(dict.nodes());
 		Iterator<String> it = dict.nodes().iterator();
-		
 
 		for (int i = 0; i < dict.nodes().size(); i++) {
 			Iterator<String> it2 = dict.nodes().iterator();
 			String currentWord = it.next();
 			for (int j = 0; j < dict.nodes().size(); j++) {
 				String comparedWord = it2.next();
-				//System.out.println("Word Being Compared: " + currentWord + ", "+ comparedWord);
+
 				if (oneDiff(currentWord, comparedWord)) {
-					//System.out.println("Words are one-different.***********************************************************************************************");
-					dict.addEdge(currentWord, comparedWord, oneDiffIndex(currentWord, comparedWord));
+
+					dict.addEdge(currentWord, comparedWord,
+							oneDiffIndex(currentWord, comparedWord));
 				}
 			}
 		}
-		//System.out.println(dict.edges());
+
 	}
 
 	private static boolean oneDiff(String word1, String word2) {
@@ -75,7 +112,7 @@ public class MinLengthLadderUsingAGraph {
 		for (int i = 0; i < 5; i++) {
 			if (word1.charAt(i) != word2.charAt(i)) {
 				counter++;
-				
+
 			}
 		}
 		if (counter == 1) {
@@ -84,9 +121,10 @@ public class MinLengthLadderUsingAGraph {
 			return false;
 		}
 	}
+
 	private static int oneDiffIndex(String word1, String word2) {
 		int index = 0;
-		for (int i = 0; i < 5; i ++) {
+		for (int i = 0; i < 5; i++) {
 			if (word1.charAt(i) != word2.charAt(i)) {
 				index = i;
 			}

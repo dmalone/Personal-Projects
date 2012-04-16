@@ -20,9 +20,9 @@ public class Graph<T> {
 		return nodes;
 	}
 
-	public Map<T, Set<Pair<Integer, T>>> edges() {
-		return edges;
-	}
+	// public Map<T, Set<Pair<Integer, T>>> edges() {
+	// return edges;
+	// }
 
 	public void addNode(T n) {
 		// postcondition: adds node n to the set of nodes, and if the
@@ -48,7 +48,6 @@ public class Graph<T> {
 	}
 
 	public List<T> minLengthPath(T src, T dest, int length) {
-
 		// post-condition: returns a path (as a list of nodes) from "src" to
 		// "dest" of
 		// length "length" where "length" is the shortest length of any path
@@ -60,55 +59,60 @@ public class Graph<T> {
 		LinkedList<T> emptyList = new LinkedList<T>();
 		Set<T> visitedNodes = new HashSet<T>();
 		q.add(src);
+
 		while (!q.isEmpty()) {
 			T currentNode = q.poll();
 
 			visitedNodes.add(currentNode);
 
-			// System.out.println(this.edges.get(currentNode));
 			Set<Pair<Integer, T>> neighbors = this.edges.get(currentNode);
 
 			Iterator<Pair<Integer, T>> it = neighbors.iterator();
 			for (int i = 0; i < neighbors.size(); i++) {
+
 				T current = it.next().two();
+
 				if (!visitedNodes.contains(current)) {
 					visitedNodes.add(current);
 					q.add(current);
 					Pair<T, T> hi = new Pair<T, T>(current, currentNode);
 					q2.add(hi);
 				}
+
 				if (current.equals(dest)) {
 					LinkedList<T> alist = new LinkedList<T>();
 					T node2 = dest;
-					
-					
+
 					while (!node2.equals(src)) {
 						alist.addFirst(node2);
 						Queue<Pair<T, T>> myQ = new LinkedList<Pair<T, T>>();
 						myQ.addAll(q2);
 						node2 = parentOf(node2, myQ);
-						
+
 					}
+
 					alist.addFirst(src);
+
 					if (alist.size() == length) {
 						return alist;
 					}
-					
+
 				}
 
 			}
 
 		}
-		
+
 		return emptyList;
 	}
 
+	// Determines the parent of the selected node.
 	public T parentOf(T node, Queue<Pair<T, T>> q) {
 		T parent = null;
 		while (!q.isEmpty()) {
 			Pair<T, T> test = q.poll();
 			if (test.one().equals(node)) {
-				//System.out.println(test.two());
+				// System.out.println(test.two());
 				parent = test.two();
 				return parent;
 			}
