@@ -30,10 +30,6 @@ public class MinLengthLadderUsingAGraph {
 		}
 
 		int length = Integer.parseInt(mLength);
-		
-//		if (length == 0) {
-//			System.out.println("No ladder exists with the given length!");
-//		}
 
 		if ((start.length() != 5) || (end.length() != 5)) {
 			System.out.println("Invalid word length!");
