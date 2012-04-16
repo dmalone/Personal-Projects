@@ -1,5 +1,6 @@
 package pset4;
 
+//Pair class was already defined and made by professor. This was left untouched
 public final class Pair<S, T> {
 	private S s;
 	private T t;

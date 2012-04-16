@@ -12,7 +12,6 @@ public class MinLengthLadderUsingAGraph {
 		String filename = "words.dat";
 		Graph<String> dictionary = new Graph<String>();
 		initializeWordGraph(filename, dictionary);
-
 		BufferedReader stdin = new BufferedReader(new InputStreamReader(
 				System.in));
 		System.out.println("enter starting word:");
@@ -86,15 +85,16 @@ public class MinLengthLadderUsingAGraph {
 
 		}
 		Iterator<String> it = dict.nodes().iterator();
-
+		// Take each word in the dictionary and compare it to the rest of the
+		// words
 		for (int i = 0; i < dict.nodes().size(); i++) {
 			Iterator<String> it2 = dict.nodes().iterator();
 			String currentWord = it.next();
 			for (int j = 0; j < dict.nodes().size(); j++) {
 				String comparedWord = it2.next();
-
+				// If there are two words that are one-different, then form an
+				// edge between them with the one-different index as the label
 				if (oneDiff(currentWord, comparedWord)) {
-
 					dict.addEdge(currentWord, comparedWord,
 							oneDiffIndex(currentWord, comparedWord));
 				}
@@ -103,6 +103,7 @@ public class MinLengthLadderUsingAGraph {
 
 	}
 
+	// Check if word1 is one-different from word2
 	private static boolean oneDiff(String word1, String word2) {
 		int counter = 0;
 		for (int i = 0; i < 5; i++) {
@@ -118,6 +119,7 @@ public class MinLengthLadderUsingAGraph {
 		}
 	}
 
+	// Returns the index at which the word is one-different.
 	private static int oneDiffIndex(String word1, String word2) {
 		int index = 0;
 		for (int i = 0; i < 5; i++) {
