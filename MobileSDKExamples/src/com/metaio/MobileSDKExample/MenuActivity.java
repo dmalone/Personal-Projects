@@ -66,7 +66,7 @@ public class MenuActivity extends Activity
 			mMenuItemLayoutParamters = new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 			
 			createMenuItem( "Example 1:\r\nHello Augmented World", HelloAugmentedWorldActivity.class);
-//			createMenuItem( "Example 2:\r\nAdvanced Content", AdvancedContentActivity.class);
+			createMenuItem( "Example 2:\r\nAdvanced Content", AdvancedContentActivity.class);
 //			createMenuItem( "Example 3:\r\nGPS Location Based", GPSLocationBasedActivity.class );
 //			createMenuItem( "Example 4:\r\nCustom Renderer", GLES20Activity.class );
 			findViewById(R.id.textStatus).setVisibility(View.INVISIBLE);

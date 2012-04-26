@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.metaio.MobileSDKExample.R;
@@ -84,6 +85,7 @@ public class AdvancedContentActivity extends ARViewActivity {
 	 */
 	private boolean mIsAnimationRunning;
 
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -215,10 +217,7 @@ public class AdvancedContentActivity extends ARViewActivity {
 		if ( !mIsAnimationRunning && geometry.equals(mMetaioMan)) {
 			UnifeyeDebug.log("UnifeyeCallbackHandler.onGeometryTouched: " + geometry);
 			//mMetaioMan.setMoveTranslation(new Vector3d(0,-100,0));
-			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
-			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
-			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
-			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
+		
 			
 //			Serialized s1 = new Serialized(mMetaioMan);
 			//IUnifeyeMobileGeometry blah = mMetaioMan;
@@ -249,14 +248,14 @@ public class AdvancedContentActivity extends ARViewActivity {
 				//k+=5;
 			//}
 
-//			if ( Math.random()< .5 )
-//			{
-//				mMetaioMan.startAnimation("close_down", false);
-//			}
-//			else
-//			{
-//				mMetaioMan.startAnimation("shock_down", false);
-//			}
+			if ( Math.random()< .5 )
+			{
+				mMetaioMan.startAnimation("close_down", false);
+			}
+			else
+			{
+				mMetaioMan.startAnimation("shock_down", false);
+			}
 			mIsAnimationRunning = true;
 		}
 		else if ( geometry.equals(mMoviePlayButtonPlane))
@@ -288,7 +287,7 @@ public class AdvancedContentActivity extends ARViewActivity {
 				String animationName) {
 			UnifeyeDebug.log("MobileSDKCallbackHandler.onAnimationEnd: "
 					+ animationName);
-
+			
 			/*
 			 * Decide which animation should be played next. 
 			 * If no special conditions apply, it will be the 
