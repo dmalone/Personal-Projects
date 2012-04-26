@@ -15,7 +15,8 @@ import android.util.Log;
 import com.metaio.unifeye.UnifeyeDebug;
 import com.metaio.unifeye.ndk.IUnifeyeMobileGeometry;
 import com.metaio.unifeye.ndk.Vector3d;
-
+import com.metaio.unifeye.ndk.Vector4d;
+import java.lang.Math;
 /**
  * EXAMPLE 1
  * 
@@ -71,21 +72,41 @@ public class HelloAugmentedWorldActivity extends ARViewActivity  {
 			loadTrackingData( mTrackingDataFileName ); 
 
 			// Load all geometry
-			mGeometry  = loadGeometry("metaioman.md2");
+			mGeometry = loadGeometry("darthvader/darthvader.md2");
+			mGeometry.setVisible(true);
+			mGeometry.setMoveRotation(new Vector4d(1f,0f,0f,1.57f));
+			mGeometry.setMoveRotation(new Vector4d(0f,0f,1f,1.57f),true);
+			mGeometry.setMoveTranslation(new Vector3d(0,100,0));
+			mGeometry.startAnimation("Stand", true);
+			
+			mGeometry2 = loadGeometry("darthvader/weapon.md2");
+			mGeometry2.setVisible(true);
+			mGeometry2.setMoveRotation(new Vector4d(1f,0f,0f,1.57f));
+			mGeometry2.setMoveRotation(new Vector4d(0f,0f,1f,1.57f),true);
+			mGeometry2.setMoveTranslation(new Vector3d(0,100,0));
+			mGeometry2.startAnimation("Stand", true);
+
+			
+			mGeometry3 = loadGeometry("yoshi/yoshi.md2");
+			mGeometry3.setVisible(true);
+			mGeometry3.setMoveRotation(new Vector4d(1f,0f,0f,1.57f));
+			mGeometry3.setMoveRotation(new Vector4d(0f,0f,1f,-1.57f),true);
+			mGeometry3.setMoveTranslation(new Vector3d(0,-100,0));
+			mGeometry3.startAnimation("stand", true);
 			//mGeometry2 = loadGeometry("metaioman.md2");
 			//mGeometry3 = loadGeometry("metaioman.md2");
 
 			//mButton = loadGeometry("plane.obj");
 			
 			// Do something with it, like scaling
-			mGeometry.setMoveScale( new Vector3d(.5f,.5f,.5f) );
-			mGeometry.setMoveRotation(new Vector3d(200, 0, 0));
-			
-			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
-			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
-			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
-			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
-			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+//			mGeometry.setMoveScale( new Vector3d(.5f,.5f,.5f) );
+//			mGeometry.setMoveRotation(new Vector3d(200, 0, 0));
+//			
+//			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+//			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+//			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+//			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
+//			mGeometry.setMoveTranslation(new Vector3d(0,20,0));
 			
 			//mGeometry.
 			

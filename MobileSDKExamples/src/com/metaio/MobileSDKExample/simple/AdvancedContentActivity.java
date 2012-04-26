@@ -215,6 +215,10 @@ public class AdvancedContentActivity extends ARViewActivity {
 		if ( !mIsAnimationRunning && geometry.equals(mMetaioMan)) {
 			UnifeyeDebug.log("UnifeyeCallbackHandler.onGeometryTouched: " + geometry);
 			//mMetaioMan.setMoveTranslation(new Vector3d(0,-100,0));
+			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
+			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
+			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
+			mMetaioMan.setMoveTranslation(new Vector3d(10, 0,0));
 			
 //			Serialized s1 = new Serialized(mMetaioMan);
 			//IUnifeyeMobileGeometry blah = mMetaioMan;
@@ -222,13 +226,13 @@ public class AdvancedContentActivity extends ARViewActivity {
 			//Bundle bundle = new Bundle();
 			//bundle.putSerializable("lastState", s1)
 			
-			Intent myIntent = new Intent(AdvancedContentActivity.this,ARService.class);
+			//Intent myIntent = new Intent(AdvancedContentActivity.this,ARService.class);
 			//bundle.putParcelable("geoMan", p);
 			//if(bundle.containsKey("geoMan")){
 			//myIntent.putExtras(bundle);}
 			
-			mMetaioMan.setMoveTranslation(new Vector3d(var, 0,0));
-			var+=10;
+			//mMetaioMan.setMoveTranslation(new Vector3d(50, 0,0));
+			//var+=10;
 			
 			//Toast.makeText(this, "TROLOLOL", Toast.LENGTH_LONG).show();
 
@@ -245,22 +249,22 @@ public class AdvancedContentActivity extends ARViewActivity {
 				//k+=5;
 			//}
 
-			if ( Math.random()< .5 )
-			{
-				mMetaioMan.startAnimation("close_down", false);
-			}
-			else
-			{
-				mMetaioMan.startAnimation("shock_down", false);
-			}
-			//mIsAnimationRunning = true;
+//			if ( Math.random()< .5 )
+//			{
+//				mMetaioMan.startAnimation("close_down", false);
+//			}
+//			else
+//			{
+//				mMetaioMan.startAnimation("shock_down", false);
+//			}
+			mIsAnimationRunning = true;
 		}
-		/*else if ( geometry.equals(mMoviePlayButtonPlane))
+		else if ( geometry.equals(mMoviePlayButtonPlane))
 		{
 			mMoviePlane.playMovieTexture();
 			mMoviePlane.setVisible(true);
 			mMoviePlayButtonPlane.setVisible(false);
-		}*/
+		}
 	}
 
 	
