@@ -14,16 +14,21 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.metaio.MobileSDKExample.MenuActivity;
 import com.metaio.MobileSDKExample.R;
 import com.metaio.unifeye.UnifeyeDebug;
 import com.metaio.unifeye.ndk.IUnifeyeMobileCallback;
 import com.metaio.unifeye.ndk.IUnifeyeMobileGeometry;
 import com.metaio.unifeye.ndk.Vector3d;
 import com.metaio.unifeye.ndk.Vector4d;
+import com.sun.org.apache.xml.internal.serializer.ToStream;
 
 import java.awt.SplashScreen;
 import java.lang.Math;
@@ -53,10 +58,11 @@ public class HelloAugmentedWorldActivity extends ARViewActivity {
 	/**
 	 * The geometry to be displayed
 	 */
-	private IUnifeyeMobileGeometry mGeometry;
-	private IUnifeyeMobileGeometry mGeometry2;
-	private IUnifeyeMobileGeometry mGeometry3;
-	private IUnifeyeMobileGeometry mGeometry4;
+	private IUnifeyeMobileGeometry mDarthVader;
+	private IUnifeyeMobileGeometry mLightSaber;
+	private IUnifeyeMobileGeometry mYoshi;
+	private IUnifeyeMobileGeometry mGameBoy;
+	private IUnifeyeMobileGeometry mSelectedGeometry, mEnemyGeometry;
 	private IUnifeyeMobileGeometry mButton;
 	/**
 	 * Tracking file you like to use. The file must be within the assets folder
@@ -75,11 +81,48 @@ public class HelloAugmentedWorldActivity extends ARViewActivity {
 	 * This tracking configuration used ID Markers for tracking
 	 */
 	private final String mTrackingDataMarker = "TrackingData_Marker.xml";
-
-	private ImageView icon;
-	private ProgressBar bar;
 	
+	/**
+	 * Button, layouts and bars to be displayed
+	 */
+	private ImageView playerIcon, enemyIcon;
+	private ProgressBar bar;
+	private TextView win;
+	private LinearLayout buttons, playerHealth, enemyHealth;
 
+	//Take the model selected by the player and place it on the appropriate side
+	protected void showGeometryPlayer(IUnifeyeMobileGeometry geometry,
+			IUnifeyeMobileGeometry weapon) {
+		geometry.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+		geometry.setMoveRotation(new Vector4d(0f, 0f, 1f, 1.57f), true);
+		geometry.setMoveTranslation(new Vector3d(0, 100, 0));
+		weapon.setVisible(true);
+		weapon.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+		weapon.setMoveRotation(new Vector4d(0f, 0f, 1f, 1.57f), true);
+		weapon.setMoveTranslation(new Vector3d(0, 100, 0));
+		if (geometry.equals(mDarthVader)) {
+			geometry.startAnimation("Stand", true);
+			weapon.startAnimation("Stand", true);
+		} else if (geometry.equals(mYoshi)) {
+			geometry.startAnimation("stand", true);
+			weapon.startAnimation("stand", true);
+
+		}
+	}
+
+	//Take the enemy model and place it on the opposite side
+	protected void showGeometryEnemy(IUnifeyeMobileGeometry geometry) {
+		geometry.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+		geometry.setMoveRotation(new Vector4d(0f, 0f, 1f, -1.57f), true);
+		geometry.setMoveTranslation(new Vector3d(0, -100, 0));
+		if (geometry.equals(mDarthVader)) {
+			geometry.startAnimation("Stand", true);
+		} else if (geometry.equals(mYoshi)) {
+			geometry.startAnimation("stand", true);
+		}
+	}
+
+	//Handlers needed to help detect when an animation ends
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -95,89 +138,132 @@ public class HelloAugmentedWorldActivity extends ARViewActivity {
 	/**
 	 * Gets called by the super-class after the GLSurface has been created. It
 	 * runs on the OpenGL-thread.
+	 * 
+	 * Initial loading of characters for the user to choose from
 	 */
 	@Override
 	protected void loadUnifeyeContents() {
 		try {
-			
 
-			// Intent myIntent = new
-			// Intent(HelloAugmentedWorldActivity.this,Receiver.class);
-			icon = (ImageView) findViewById(R.id.imageView2);
+			// load buttons and bars
+			playerIcon = (ImageView) findViewById(R.id.imageView2);
+			enemyIcon = (ImageView) findViewById(R.id.imageView1);
+
+			bar = (ProgressBar) findViewById(R.id.progressBar1);
+			buttons = (LinearLayout) findViewById(R.id.linearLayout1);
+			playerHealth = (LinearLayout) findViewById(R.id.linearLayout3);
+			enemyHealth = (LinearLayout) findViewById(R.id.linearLayout2);
+
 			// Load Tracking data
 			loadTrackingData(mTrackingDataFileName);
 
 			// Load all geometry
-			mGeometry = loadGeometry("darthvader/darthvader.md2");
-			mGeometry.setVisible(true);
-			mGeometry.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
-			mGeometry.setMoveRotation(new Vector4d(0f, 0f, 1f, 1.57f), true);
-			mGeometry.setMoveTranslation(new Vector3d(0, 100, 0));
-			mGeometry.startAnimation("Stand", true);
+			mDarthVader = loadGeometry("darthvader/darthvader.md2");
+			mDarthVader.setVisible(true);
+			mDarthVader.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+			mDarthVader.setMoveRotation(new Vector4d(0f, 0f, 1f, 3.14f), true);
+			mDarthVader.setMoveTranslation(new Vector3d(0, 20, 0));
+			mDarthVader.startAnimation("Stand", true);
 
-			mGeometry2 = loadGeometry("darthvader/weapon.md2");
-			mGeometry2.setVisible(true);
-			mGeometry2.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
-			mGeometry2.setMoveRotation(new Vector4d(0f, 0f, 1f, 1.57f), true);
-			mGeometry2.setMoveTranslation(new Vector3d(0, 100, 0));
-			mGeometry2.startAnimation("Stand", true);
+			mLightSaber = loadGeometry("darthvader/weapon.md2");
+			mLightSaber.setVisible(false);
+			mLightSaber.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+			mLightSaber.setMoveRotation(new Vector4d(0f, 0f, 1f, 3.14f), true);
+			mLightSaber.setMoveTranslation(new Vector3d(0, 20, 0));
+			mLightSaber.startAnimation("Stand", true);
 
-			mGeometry3 = loadGeometry("yoshi/yoshi.md2");
-			mGeometry3.setVisible(true);
-			mGeometry3.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
-			mGeometry3.setMoveRotation(new Vector4d(0f, 0f, 1f, -1.57f), true);
-			mGeometry3.setMoveTranslation(new Vector3d(0, -100, 0));
-			mGeometry3.startAnimation("stand", true);
+			mYoshi = loadGeometry("yoshi/yoshi.md2");
+			mYoshi.setVisible(true);
+			mYoshi.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+			mYoshi.setMoveRotation(new Vector4d(0f, 0f, 1f, 3.14f), true);
+			mYoshi.setMoveTranslation(new Vector3d(0, -20, 0));
+			mYoshi.startAnimation("stand", true);
 
-			// Do something with it, like scaling
-			// mGeometry.setMoveScale( new Vector3d(.5f,.5f,.5f) );
-			// mGeometry.setMoveRotation(new Vector3d(200, 0, 0));
-
+			mGameBoy = loadGeometry("yoshi/weapon.md2");
+			mGameBoy.setVisible(true);
+			mGameBoy.setMoveRotation(new Vector4d(1f, 0f, 0f, 1.57f));
+			mGameBoy.setMoveRotation(new Vector4d(0f, 0f, 1f, 3.14f), true);
+			mGameBoy.setMoveTranslation(new Vector3d(0, -20, 0));
+			mGameBoy.startAnimation("stand", true);
 		} catch (Exception e) {
 			UnifeyeDebug.printStackTrace(Log.ERROR, e);
 		}
 	}
 
+	//If any model is touched, do something
 	@Override
 	protected void onGeometryTouched(IUnifeyeMobileGeometry geometry) {
 		// TODO Auto-generated method stub
-		if (geometry.equals(mGeometry)) {
-			icon.setImageResource(R.drawable.darthicon);
-			mGeometry.startAnimation("Attack", false);
+		if (geometry.equals(mDarthVader)) {
+			mSelectedGeometry = mDarthVader;
+			mEnemyGeometry = mYoshi;
+			playerIcon.setImageResource(R.drawable.darthicon);
+			enemyIcon.setImageResource(R.drawable.yoshiicon);
+			showGeometryPlayer(mDarthVader, mLightSaber);
+			showGeometryEnemy(mYoshi);
 
 		}
+		if (geometry.equals(mYoshi)) {
+			mSelectedGeometry = mYoshi;
+			mEnemyGeometry = mDarthVader;
+			playerIcon.setImageResource(R.drawable.yoshiicon);
+			enemyIcon.setImageResource(R.drawable.darthicon);
+			showGeometryPlayer(mYoshi, mGameBoy);
+			showGeometryEnemy(mDarthVader);
+		}
+		buttons.setVisibility(View.VISIBLE);
+		playerHealth.setVisibility(View.VISIBLE);
+		enemyHealth.setVisibility(View.VISIBLE);
 	}
 
+	//If the attack button is clicked, play the attack animation as well as the enemy pain animation
 	public void onAttackClicked(final View eventSource) {
-		// showGeometry(mMetaioMan);
-		if (mGeometry != null) {
-			mGeometry.startAnimation("Attack", false);
-			mGeometry2.startAnimation("Attack", false);
+		bar.setProgress(bar.getProgress() - 20);
+		if (mSelectedGeometry.equals(mDarthVader)) {
+			mDarthVader.startAnimation("Attack", false);
+			mLightSaber.startAnimation("Attack", false);
 			// icon.setImageResource(R.drawable.darthicon);
+		} else if (mSelectedGeometry.equals(mYoshi)) {
+			mYoshi.startAnimation("attack", false);
 		}
-
+		mEnemyGeometry.startAnimation("Pain1", false);
+		mEnemyGeometry.startAnimation("paina", false);
+		if (bar.getProgress() <= 0) {
+			Toast.makeText(this, "You Win!", Toast.LENGTH_SHORT).show();
+			Intent intent = new Intent(this,MenuActivity.class);
+			startActivity(intent);
+		} 
 	}
 
+	//Defend, only plays animation right now
 	public void onDefendClicked(final View eventSource) {
 		// showGeometry(mMetaioMan);
-		if (mGeometry != null) {
-			mGeometry.startAnimation("CrStnd", true);
-			mGeometry2.startAnimation("CrStnd", true);
+		if (mSelectedGeometry.equals(mDarthVader)) {
+			mDarthVader.startAnimation("CrStnd", true);
+			mLightSaber.startAnimation("CrStnd", true);
 			// icon.setImageResource(R.drawable.darthicon);
+		} else if (mSelectedGeometry.equals(mYoshi)) {
+			mYoshi.startAnimation("crstand", true);
 		}
+		
 
 	}
 
+	//Special, only plays animation right now
 	public void onSpecialClicked(final View eventSource) {
 		// showGeometry(mMetaioMan);
-		if (mGeometry != null) {
-			mGeometry.startAnimation("Taunt", false);
-			mGeometry2.startAnimation("Taunt", false);
+		if (mSelectedGeometry.equals(mDarthVader)) {
+			mDarthVader.startAnimation("Taunt", false);
+			mLightSaber.startAnimation("Taunt", false);
 			// icon.setImageResource(R.drawable.darthicon);
+		} else if (mSelectedGeometry.equals(mYoshi)) {
+			mYoshi.startAnimation("backflip", false);
 		}
 
 	}
 
+	//Needed to detect when an animation has ended so we can return to their 'idle' pose
+	//Still can't get it to work for some reason
 	private final class MobileSDKCallbackHandler extends IUnifeyeMobileCallback {
 
 		/**
