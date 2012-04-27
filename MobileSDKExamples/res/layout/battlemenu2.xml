@@ -77,7 +77,8 @@
         android:layout_gravity="top|left"
         android:layout_marginLeft="12dp"
         android:layout_marginTop="33dp"
-        android:src="@drawable/icon" />
+        android:src="@drawable/icon"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -86,6 +87,15 @@
         android:layout_gravity="top|right"
         android:layout_marginRight="12dp"
         android:layout_marginTop="33dp"
-        android:src="@drawable/icon" />
+        android:src="@drawable/icon"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:text="Select Your Character"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </FrameLayout>

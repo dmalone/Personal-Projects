@@ -153,7 +153,7 @@ public class HelloAugmentedWorldActivity extends ARViewActivity {
 			buttons = (LinearLayout) findViewById(R.id.linearLayout1);
 			playerHealth = (LinearLayout) findViewById(R.id.linearLayout3);
 			enemyHealth = (LinearLayout) findViewById(R.id.linearLayout2);
-
+			win = (TextView) findViewById(R.id.textView1);
 			// Load Tracking data
 			loadTrackingData(mTrackingDataFileName);
 
@@ -213,7 +213,10 @@ public class HelloAugmentedWorldActivity extends ARViewActivity {
 		}
 		buttons.setVisibility(View.VISIBLE);
 		playerHealth.setVisibility(View.VISIBLE);
+		playerIcon.setVisibility(View.VISIBLE);
 		enemyHealth.setVisibility(View.VISIBLE);
+		enemyIcon.setVisibility(View.VISIBLE);
+		win.setVisibility(View.GONE);
 	}
 
 	//If the attack button is clicked, play the attack animation as well as the enemy pain animation
